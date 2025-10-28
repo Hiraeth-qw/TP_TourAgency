@@ -1,0 +1,6 @@
+@MicroserviceTour_HostAddress = http://localhost:5110
+
+GET {{MicroserviceTour_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("TourAgencyClient")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("MicroserviceTour")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+428219ba03a23de3d9b848c27e69af72faa8da14")]
-[assembly: System.Reflection.AssemblyProductAttribute("TourAgencyClient")]
-[assembly: System.Reflection.AssemblyTitleAttribute("TourAgencyClient")]
+[assembly: System.Reflection.AssemblyProductAttribute("MicroserviceTour")]
+[assembly: System.Reflection.AssemblyTitleAttribute("MicroserviceTour")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
