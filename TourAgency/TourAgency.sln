@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourAgencyClient", "TourAge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroserviceTour", "MicroserviceTour\MicroserviceTour.csproj", "{63972BDC-71A2-4B55-B929-03E9B7BB242C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicePartner", "MicroservicePartner\MicroservicePartner.csproj", "{70AB946F-1C77-4D77-8767-32A8E4B07775}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{63972BDC-71A2-4B55-B929-03E9B7BB242C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63972BDC-71A2-4B55-B929-03E9B7BB242C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63972BDC-71A2-4B55-B929-03E9B7BB242C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70AB946F-1C77-4D77-8767-32A8E4B07775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70AB946F-1C77-4D77-8767-32A8E4B07775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70AB946F-1C77-4D77-8767-32A8E4B07775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70AB946F-1C77-4D77-8767-32A8E4B07775}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
