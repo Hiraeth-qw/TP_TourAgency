@@ -12,6 +12,10 @@ namespace MicroservicePartner.Models
             modelBuilder.Entity<Partner>()
                 .Property(p => p.PartnerType)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<partnerHotel>();
+            modelBuilder.Entity<partnerOperator>();
+            modelBuilder.Entity<partnerTransport>();
         }
     }
 }
