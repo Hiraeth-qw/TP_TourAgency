@@ -1,0 +1,9 @@
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.csproj.AssemblyReference.cache
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.GeneratedMSBuildEditorConfig.editorconfig
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.AssemblyInfoInputs.cache
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.AssemblyInfo.cs
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.csproj.CoreCompileInputs.cache
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.MvcApplicationPartsAssemblyInfo.cs
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.MvcApplicationPartsAssemblyInfo.cache
+D:\VisualStudio\fromgit\TourAgency\MicroserviceTour\obj\Debug\net8.0\MicroserviceTour.sourcelink.json

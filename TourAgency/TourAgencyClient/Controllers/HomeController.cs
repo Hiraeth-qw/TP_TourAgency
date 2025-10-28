@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TourAgencyClient.Models;
 
+
 namespace TourAgencyClient.Controllers
 {
     public class HomeController : Controller

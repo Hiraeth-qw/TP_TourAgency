@@ -2,6 +2,6 @@
 {
     public class partnerOperator: Partner
     {
-        public string lisenceNumber;
+        public string LisenceNumber { get; set; }
     }
 }

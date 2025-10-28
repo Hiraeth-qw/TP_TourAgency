@@ -2,6 +2,6 @@
 {
     public class partnerHotel: Partner
     {
-        public int stars;
+        public int Stars { get; set; }
     }
 }
