@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MicroserviceTour")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa2cc211bb097a974c9f8ff09da968b9ffc2ecbd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ba8f5534168c9a9ffabf94d58622af1fe0207a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("MicroserviceTour")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MicroserviceTour")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
