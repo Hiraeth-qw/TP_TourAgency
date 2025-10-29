@@ -620,13 +620,12 @@
       },
       "TransportType": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "flight",
+          "bus",
+          "train",
+          "ship"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "Type": {
         "enum": [

@@ -15,7 +15,9 @@ namespace MicroservicePartner.Models
 
             modelBuilder.Entity<partnerHotel>();
             modelBuilder.Entity<partnerOperator>();
-            modelBuilder.Entity<partnerTransport>();
+            modelBuilder.Entity<partnerTransport>()
+                .Property(p => p.TransportType)
+                .HasConversion<string>();
         }
     }
 }
