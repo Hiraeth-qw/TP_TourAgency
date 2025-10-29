@@ -41,52 +41,6 @@
             }
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Partners"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partner"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partner"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Partner"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Partner"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Partner"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Partner"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/Partners/{id}": {
@@ -186,6 +140,186 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Partners/hotel": {
+      "post": {
+        "tags": [
+          "Partners"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerHotel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerHotel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerHotel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerHotel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerHotel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerHotel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Partners/operator": {
+      "post": {
+        "tags": [
+          "Partners"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerOperator"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerOperator"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerOperator"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Partners/transport": {
+      "post": {
+        "tags": [
+          "Partners"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Partners"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/partnerTransport"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/partnerTransport"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/partnerTransport"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -339,44 +473,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/partnerOperator"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Partners/transport": {
-      "get": {
-        "tags": [
-          "Partners"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/partnerTransport"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/partnerTransport"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/partnerTransport"
-                  }
                 }
               }
             }

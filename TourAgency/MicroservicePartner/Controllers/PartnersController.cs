@@ -73,7 +73,7 @@ namespace MicroservicePartner.Controllers
             return NoContent();
         }
 
-        // POST: api/Partners/hotels
+        // POST: api/Partners/hotel
         [HttpPost("hotel")]
         public async Task<ActionResult<partnerHotel>> PostHotel(partnerHotel hotel)
         {
@@ -83,7 +83,7 @@ namespace MicroservicePartner.Controllers
             return CreatedAtAction(nameof(GetHotel), new { id = hotel.Id }, hotel);
         }
 
-        // POST: api/Partners/operators
+        // POST: api/Partners/operator
         [HttpPost("operator")]
         public async Task<ActionResult<partnerOperator>> PostOperator(partnerOperator @operator)
         {

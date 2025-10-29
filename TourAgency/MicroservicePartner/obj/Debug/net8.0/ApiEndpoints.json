@@ -21,32 +21,6 @@
   },
   {
     "ContainingType": "MicroservicePartner.Controllers.PartnersController",
-    "Method": "PostPartner",
-    "RelativePath": "api/Partners",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "partner",
-        "Type": "MicroservicePartner.Models.Partner",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "MicroservicePartner.Models.Partner",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MicroservicePartner.Controllers.PartnersController",
     "Method": "GetPartner",
     "RelativePath": "api/Partners/{id}",
     "HttpMethod": "GET",
@@ -136,6 +110,32 @@
   },
   {
     "ContainingType": "MicroservicePartner.Controllers.PartnersController",
+    "Method": "PostHotel",
+    "RelativePath": "api/Partners/hotel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hotel",
+        "Type": "MicroservicePartner.Models.partnerHotel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MicroservicePartner.Models.partnerHotel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MicroservicePartner.Controllers.PartnersController",
     "Method": "GetHotels",
     "RelativePath": "api/Partners/hotels",
     "HttpMethod": "GET",
@@ -182,6 +182,32 @@
   },
   {
     "ContainingType": "MicroservicePartner.Controllers.PartnersController",
+    "Method": "PostOperator",
+    "RelativePath": "api/Partners/operator",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "operator",
+        "Type": "MicroservicePartner.Models.partnerOperator",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MicroservicePartner.Models.partnerOperator",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MicroservicePartner.Controllers.PartnersController",
     "Method": "GetOperators",
     "RelativePath": "api/Partners/operators",
     "HttpMethod": "GET",
@@ -217,6 +243,32 @@
     "ReturnTypes": [
       {
         "Type": "MicroservicePartner.Models.partnerOperator",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MicroservicePartner.Controllers.PartnersController",
+    "Method": "PostTransportPartner",
+    "RelativePath": "api/Partners/transport",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transportPartner",
+        "Type": "MicroservicePartner.Models.partnerTransport",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MicroservicePartner.Models.partnerTransport",
         "MediaTypes": [
           "text/plain",
           "application/json",
