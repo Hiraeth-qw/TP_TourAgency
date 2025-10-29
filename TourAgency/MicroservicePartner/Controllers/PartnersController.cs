@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MicroservicePartner.Models;
+using MicroservicePartner.DTOs;
 
 namespace MicroservicePartner.Controllers
 {
@@ -41,17 +42,21 @@ namespace MicroservicePartner.Controllers
             return partner;
         }
 
-        // PUT: api/Partners/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPartner(long id, Partner partner)
+        // PUT: api/Partners/hotel/{id}
+        [HttpPut("hotel/{id}")]
+        public async Task<IActionResult> PutHotel(long id, partnerHotel hotel)
         {
-            if (id != partner.Id)
+            if (id != hotel.Id)
             {
-                return BadRequest();
+                return BadRequest("ID in path does not match ID in body.");
             }
 
-            _context.Entry(partner).State = EntityState.Modified;
+            if (!_context.Partners.OfType<partnerHotel>().Any(h => h.Id == id))
+            {
+                return NotFound($"Hotel with ID {id} not found.");
+            }
+
+            _context.Entry(hotel).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +64,7 @@ namespace MicroservicePartner.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PartnerExists(id))
+                if (!_context.Partners.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
@@ -72,15 +77,104 @@ namespace MicroservicePartner.Controllers
             return NoContent();
         }
 
-        // POST: api/Partners
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Partner>> PostPartner(Partner partner)
+        // PUT: api/Partners/operator/{id}
+        [HttpPut("operator/{id}")]
+        public async Task<IActionResult> PutOperator(long id, partnerOperator @operator)
         {
-            _context.Partners.Add(partner);
+            if (id != @operator.Id)
+            {
+                return BadRequest("ID in path does not match ID in body.");
+            }
+
+            if (!_context.Partners.OfType<partnerOperator>().Any(o => o.Id == id))
+            {
+                return NotFound($"Operator with ID {id} not found.");
+            }
+
+            _context.Entry(@operator).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Partners.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Partners/transport/{id}
+        [HttpPut("transport/{id}")]
+        public async Task<IActionResult> PutTransportPartner(long id, partnerTransport transportPartner)
+        {
+            if (id != transportPartner.Id)
+            {
+                return BadRequest("ID in path does not match ID in body.");
+            }
+
+            if (!_context.Partners.OfType<partnerTransport>().Any(t => t.Id == id))
+            {
+                return NotFound($"Transport partner with ID {id} not found.");
+            }
+
+            _context.Entry(transportPartner).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Partners.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Partners/hotel
+        [HttpPost("hotel")]
+        public async Task<ActionResult<partnerHotel>> PostHotel(partnerHotel hotel)
+        {
+            _context.Partners.Add(hotel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPartner", new { id = partner.Id }, partner);
+            return CreatedAtAction(nameof(GetHotel), new { id = hotel.Id }, hotel);
+        }
+
+        // POST: api/Partners/operator
+        [HttpPost("operator")]
+        public async Task<ActionResult<partnerOperator>> PostOperator(partnerOperator @operator)
+        {
+            _context.Partners.Add(@operator);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetOperator), new { id = @operator.Id }, @operator);
+        }
+
+        // POST: api/Partners/transport
+        [HttpPost("transport")]
+        public async Task<ActionResult<partnerTransport>> PostTransportPartner(partnerTransport transportPartner)
+        {
+            _context.Partners.Add(transportPartner);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetTransportPartner), new { id = transportPartner.Id }, transportPartner);
         }
 
         // DELETE: api/Partners/5
@@ -99,9 +193,120 @@ namespace MicroservicePartner.Controllers
             return NoContent();
         }
 
-        private bool PartnerExists(long id)
+        // GET: api/partners/hotels
+        [HttpGet("hotels")]
+        public async Task<ActionResult<IEnumerable<partnerHotel>>> GetHotels()
         {
-            return _context.Partners.Any(e => e.Id == id);
+            var hotels = await _context.Partners.OfType<partnerHotel>().ToListAsync();
+
+            if (hotels == null || !hotels.Any())
+            {
+                return NotFound("No hotels found.");
+            }
+
+            return Ok(hotels);
+        }
+        
+        // GET: api/partners/hotels/{id}
+        [HttpGet("hotels/{id}")]
+        public async Task<ActionResult<partnerHotel>> GetHotel(long id)
+        {
+            var hotel = await _context.Partners.OfType<partnerHotel>().FirstOrDefaultAsync(h => h.Id == id);
+
+            if (hotel == null)
+            {
+                return NotFound($"Hotel with ID {id} not found.");
+            }
+
+            return Ok(hotel);
+        }
+
+        // GET: api/Partners/operators
+        [HttpGet("operators")]
+        public async Task<ActionResult<IEnumerable<partnerOperator>>> GetOperators()
+        {
+            var operators = await _context.Partners.OfType<partnerOperator>().ToListAsync();
+
+            if (operators == null || !operators.Any())
+            {
+                return NotFound("No operators found.");
+            }
+
+            return Ok(operators);
+        }
+
+        // GET: api/Partners/operators/{id}
+        [HttpGet("operators/{id}")]
+        public async Task<ActionResult<partnerOperator>> GetOperator(long id)
+        {
+            var @operator = await _context.Partners.OfType<partnerOperator>().FirstOrDefaultAsync(o => o.Id == id);
+
+            if (@operator == null)
+            {
+                return NotFound($"Operator with ID {id} not found.");
+            }
+
+            return Ok(@operator);
+        }
+
+        // GET: api/Partners/transport
+        [HttpGet("transport")]
+        public async Task<ActionResult<IEnumerable<partnerTransport>>> GetTransportPartners()
+        {
+            var transports = await _context.Partners.OfType<partnerTransport>().ToListAsync();
+
+            if (transports == null || !transports.Any())
+            {
+                return NotFound("No transport partners found.");
+            }
+
+            return Ok(transports);
+        }
+
+        // GET: api/Partners/transport/{id}
+        [HttpGet("transport/{id}")]
+        public async Task<ActionResult<partnerTransport>> GetTransportPartner(long id)
+        {
+            var transport = await _context.Partners.OfType<partnerTransport>().FirstOrDefaultAsync(t => t.Id == id);
+
+            if (transport == null)
+            {
+                return NotFound($"Transport partner with ID {id} not found.");
+            }
+
+            return Ok(transport);
+        }
+
+        [HttpPost("confirm-booking")]
+        public async Task<ActionResult<bool>> ConfirmBooking([FromBody] PartnerConfirmationRequest request)
+        {
+            var partner = await _context.Partners.FindAsync(request.PartnerId);
+            if (partner == null)
+            {
+                return NotFound($"Partner with ID {request.PartnerId} not found in the system.");
+            }
+
+            bool isServiceAvailable = true;
+
+            if (request.ServiceStartDate.Date == DateTime.Now.Date)
+            {
+                isServiceAvailable = false;
+            }
+            else if (partner.PartnerType == Models.Type.Hotel && request.ServiceStartDate.Date <= DateTime.Now.AddDays(1).Date)
+            {
+                isServiceAvailable = false;
+            }
+
+            if (isServiceAvailable)
+            {
+
+                return Ok(true);
+            }
+            else
+            {
+
+                return Ok(false);
+            }
         }
     }
 }
