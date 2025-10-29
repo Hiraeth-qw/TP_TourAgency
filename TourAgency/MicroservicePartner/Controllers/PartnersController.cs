@@ -308,10 +308,5 @@ namespace MicroservicePartner.Controllers
                 return Ok(false);
             }
         }
-
-        private bool PartnerExists(long id)
-        {
-            return _context.Partners.Any(e => e.Id == id);
-        }
     }
 }
