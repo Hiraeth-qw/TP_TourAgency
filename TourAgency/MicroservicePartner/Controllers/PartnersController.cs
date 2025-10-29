@@ -42,17 +42,21 @@ namespace MicroservicePartner.Controllers
             return partner;
         }
 
-        // PUT: api/Partners/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPartner(long id, Partner partner)
+        // PUT: api/Partners/hotel/{id}
+        [HttpPut("hotel/{id}")]
+        public async Task<IActionResult> PutHotel(long id, partnerHotel hotel)
         {
-            if (id != partner.Id)
+            if (id != hotel.Id)
             {
-                return BadRequest();
+                return BadRequest("ID in path does not match ID in body.");
             }
 
-            _context.Entry(partner).State = EntityState.Modified;
+            if (!_context.Partners.OfType<partnerHotel>().Any(h => h.Id == id))
+            {
+                return NotFound($"Hotel with ID {id} not found.");
+            }
+
+            _context.Entry(hotel).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +64,77 @@ namespace MicroservicePartner.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PartnerExists(id))
+                if (!_context.Partners.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Partners/operator/{id}
+        [HttpPut("operator/{id}")]
+        public async Task<IActionResult> PutOperator(long id, partnerOperator @operator)
+        {
+            if (id != @operator.Id)
+            {
+                return BadRequest("ID in path does not match ID in body.");
+            }
+
+            if (!_context.Partners.OfType<partnerOperator>().Any(o => o.Id == id))
+            {
+                return NotFound($"Operator with ID {id} not found.");
+            }
+
+            _context.Entry(@operator).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Partners.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Partners/transport/{id}
+        [HttpPut("transport/{id}")]
+        public async Task<IActionResult> PutTransportPartner(long id, partnerTransport transportPartner)
+        {
+            if (id != transportPartner.Id)
+            {
+                return BadRequest("ID in path does not match ID in body.");
+            }
+
+            if (!_context.Partners.OfType<partnerTransport>().Any(t => t.Id == id))
+            {
+                return NotFound($"Transport partner with ID {id} not found.");
+            }
+
+            _context.Entry(transportPartner).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Partners.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }

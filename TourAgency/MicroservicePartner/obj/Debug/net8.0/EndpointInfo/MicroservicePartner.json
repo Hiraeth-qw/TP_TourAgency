@@ -82,6 +82,29 @@
           }
         }
       },
+      "delete": {
+        "tags": [
+          "Partners"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Partners/hotel/{id}": {
       "put": {
         "tags": [
           "Partners"
@@ -101,17 +124,101 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partner"
+                "$ref": "#/components/schemas/partnerHotel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partner"
+                "$ref": "#/components/schemas/partnerHotel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Partner"
+                "$ref": "#/components/schemas/partnerHotel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Partners/operator/{id}": {
+      "put": {
+        "tags": [
+          "Partners"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerOperator"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Partners/transport/{id}": {
+      "put": {
+        "tags": [
+          "Partners"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/partnerTransport"
               }
             }
           }
@@ -122,7 +229,7 @@
           }
         }
       },
-      "delete": {
+      "get": {
         "tags": [
           "Partners"
         ],
@@ -139,7 +246,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/partnerTransport"
+                }
+              }
+            }
           }
         }
       }
@@ -473,46 +597,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/partnerOperator"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Partners/transport/{id}": {
-      "get": {
-        "tags": [
-          "Partners"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/partnerTransport"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/partnerTransport"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/partnerTransport"
                 }
               }
             }
