@@ -73,15 +73,34 @@ namespace MicroservicePartner.Controllers
             return NoContent();
         }
 
-        // POST: api/Partners
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Partner>> PostPartner(Partner partner)
+        // POST: api/Partners/hotels
+        [HttpPost("hotel")]
+        public async Task<ActionResult<partnerHotel>> PostHotel(partnerHotel hotel)
         {
-            _context.Partners.Add(partner);
+            _context.Partners.Add(hotel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPartner", new { id = partner.Id }, partner);
+            return CreatedAtAction(nameof(GetHotel), new { id = hotel.Id }, hotel);
+        }
+
+        // POST: api/Partners/operators
+        [HttpPost("operator")]
+        public async Task<ActionResult<partnerOperator>> PostOperator(partnerOperator @operator)
+        {
+            _context.Partners.Add(@operator);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetOperator), new { id = @operator.Id }, @operator);
+        }
+
+        // POST: api/Partners/transport
+        [HttpPost("transport")]
+        public async Task<ActionResult<partnerTransport>> PostTransportPartner(partnerTransport transportPartner)
+        {
+            _context.Partners.Add(transportPartner);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetTransportPartner), new { id = transportPartner.Id }, transportPartner);
         }
 
         // DELETE: api/Partners/5
