@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MicroserviceTour.Models;
+using MicroserviceTour.DTOs;
 
 namespace MicroserviceTour.Controllers
 {
@@ -22,36 +23,83 @@ namespace MicroserviceTour.Controllers
 
         // GET: api/Tours
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tour>>> GetTour()
+        public async Task<ActionResult<IEnumerable<TourRead>>> GetTour([FromQuery] string? location, [FromQuery] DateTime? startDate)
         {
-            return await _context.Tour.ToListAsync();
+            var query = _context.Tour.AsQueryable();
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                query = query.Where(t => t.Location.Contains(location));
+            }
+            if (startDate.HasValue)
+            {
+                query = query.Where(t => t.StartDate.Date >=  startDate.Value.Date);
+            }
+            query = query.Where(t => t.EndDate.Date >= DateTime.UtcNow.Date);
+            query = query.Where(t => t.AvailableSeats > 0);
+
+            return await query.Select(t => new TourRead
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Location = t.Location,
+                Description = t.Description,
+                StartDate = t.StartDate,
+                EndDate = t.EndDate,
+                Price = t.Price,
+                AvailableSeats = t.AvailableSeats,
+                PartnerIds = t.PartnerIds
+            }).ToListAsync();
         }
 
         // GET: api/Tours/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tour>> GetTour(int id)
+        public async Task<ActionResult<TourRead>> GetTour(int id)
         {
-            var tour = await _context.Tour.FindAsync(id);
+            var tourDto = await _context.Tour
+                .Where(t => t.Id == id)
+                .Select(t => new TourRead
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Location = t.Location,
+                    Description = t.Description,
+                    StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    Price = t.Price,
+                    AvailableSeats = t.AvailableSeats,
+                    PartnerIds = t.PartnerIds
+                })
+                .FirstOrDefaultAsync();
 
-            if (tour == null)
+            if (tourDto == null)
             {
                 return NotFound();
             }
 
-            return tour;
+            return tourDto;
         }
 
         // PUT: api/Tours/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTour(int id, Tour tour)
+        public async Task<IActionResult> PutTour(int id, TourCreateUpdate tourDto)
         {
-            if (id != tour.Id)
+            var tourToUpdate = await _context.Tour.FindAsync(id);
+
+            if (tourToUpdate == null)
             {
-                return BadRequest();
+                return NotFound($"Tour with ID {id} not found.");
             }
 
-            _context.Entry(tour).State = EntityState.Modified;
+            // Mapping DTO на сущность
+            tourToUpdate.Title = tourDto.Title;
+            tourToUpdate.Location = tourDto.Location;
+            tourToUpdate.Description = tourDto.Description;
+            tourToUpdate.StartDate = tourDto.StartDate;
+            tourToUpdate.EndDate = tourDto.EndDate;
+            tourToUpdate.Price = tourDto.Price;
+            tourToUpdate.AvailableSeats = tourDto.AvailableSeats;
+            tourToUpdate.PartnerIds = tourDto.PartnerIds;
 
             try
             {
@@ -73,14 +121,26 @@ namespace MicroserviceTour.Controllers
         }
 
         // POST: api/Tours
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tour>> PostTour(Tour tour)
+        public async Task<ActionResult<Tour>> PostTour(TourCreateUpdate tourDto)
         {
-            _context.Tour.Add(tour);
+            // Mapping DTO на Tour
+            var newTour = new Tour
+            {
+                Title = tourDto.Title,
+                Location = tourDto.Location,
+                Description = tourDto.Description,
+                StartDate = tourDto.StartDate,
+                EndDate = tourDto.EndDate,
+                Price = tourDto.Price,
+                AvailableSeats = tourDto.AvailableSeats,
+                PartnerIds = tourDto.PartnerIds
+            };
+
+            _context.Tour.Add(newTour);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTour", new { id = tour.Id }, tour);
+            return CreatedAtAction("GetTour", new { id = newTour.Id }, newTour);
         }
 
         // DELETE: api/Tours/5
@@ -97,6 +157,26 @@ namespace MicroserviceTour.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // PATCH: api/Tours/5/reserve-seat
+        [HttpPatch("{id}/reserve-seat")]
+        public async Task<IActionResult> ReserveSeat(int id)
+        {
+            var tour = await _context.Tour.FindAsync(id);
+
+            if (tour == null) return NotFound();
+
+            if (tour.AvailableSeats > 0)
+            {
+                tour.AvailableSeats--;
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return Conflict("No available seats.");
+            }
         }
 
         private bool TourExists(int id)
