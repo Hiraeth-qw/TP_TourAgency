@@ -27,7 +27,7 @@ namespace MicroserviceUser.Controllers
         }
 
         //POST: api/account/Register
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)
@@ -63,7 +63,7 @@ namespace MicroserviceUser.Controllers
         }
 
         //POST: api/account/Login
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
