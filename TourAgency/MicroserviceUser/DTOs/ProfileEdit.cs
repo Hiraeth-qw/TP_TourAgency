@@ -9,5 +9,7 @@ namespace MicroserviceUser.DTOs
 
         [StringLength(100)]
         public string LastName { get; set; }
+        [Phone(ErrorMessage = "Wrong number format")]
+        public string PhoneNumber { get; set; }
     }
 }

@@ -159,7 +159,8 @@ namespace MicroserviceUser.Controllers
             var userDto = new ProfileEdit
             {
                 FirstName = user.firstName,
-                LastName = user.lastName
+                LastName = user.lastName,
+                PhoneNumber = user.PhoneNumber
             };
 
             patch.ApplyTo(userDto, ModelState);
@@ -171,6 +172,11 @@ namespace MicroserviceUser.Controllers
 
             user.firstName = userDto.FirstName;
             user.lastName = userDto.LastName;
+            if (user.PhoneNumber != userDto.PhoneNumber)
+            {
+                user.PhoneNumber = userDto.PhoneNumber;
+                user.PhoneNumberConfirmed = false;
+            }
 
             var result = await _userManager.UpdateAsync(user);
 
