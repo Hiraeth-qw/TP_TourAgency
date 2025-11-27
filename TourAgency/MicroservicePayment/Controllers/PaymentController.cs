@@ -74,7 +74,6 @@ namespace MicroservicePayment.Controllers
 
         // GET: api/Payment/me
         [HttpGet("me")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Payment>>> GetMyPayments()
         {
             var userId = GetCurrentUserId();
@@ -98,7 +97,6 @@ namespace MicroservicePayment.Controllers
 
         //GET: api/Payment/{id}
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetPayment(int id)
         {
             var payment = await _context.Payment.FindAsync(id);

@@ -165,6 +165,7 @@ namespace MicroserviceTour.Controllers
 
         // PATCH: api/Tours/5/reserve-seat
         [HttpPatch("{id}/reserve-seat")]
+        [Authorize]
         public async Task<IActionResult> ReserveSeat(int id)
         {
             var tour = await _context.Tour.FindAsync(id);
