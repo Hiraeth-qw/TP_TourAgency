@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MicroserviceTour.Models;
 using MicroserviceTour.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MicroserviceTour.Controllers
 {
@@ -82,6 +83,7 @@ namespace MicroserviceTour.Controllers
 
         // PUT: api/Tours/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "ContentManager")]
         public async Task<IActionResult> PutTour(int id, TourCreateUpdate tourDto)
         {
             var tourToUpdate = await _context.Tour.FindAsync(id);
@@ -122,6 +124,7 @@ namespace MicroserviceTour.Controllers
 
         // POST: api/Tours
         [HttpPost]
+        [Authorize(Roles = "ContentManager")]
         public async Task<ActionResult<Tour>> PostTour(TourCreateUpdate tourDto)
         {
             // Mapping DTO на Tour
@@ -145,6 +148,7 @@ namespace MicroserviceTour.Controllers
 
         // DELETE: api/Tours/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ContentManager")]
         public async Task<IActionResult> DeleteTour(int id)
         {
             var tour = await _context.Tour.FindAsync(id);
