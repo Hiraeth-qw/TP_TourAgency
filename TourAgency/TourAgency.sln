@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroserviceUser", "Microse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicePayment", "MicroservicePayment\MicroservicePayment.csproj", "{1242A195-DA1B-41C6-A45F-382C9102212B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroserviceBooking", "MircoserviceBooking\MicroserviceBooking.csproj", "{A2B06481-0578-4A6D-B4ED-95161940E033}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1242A195-DA1B-41C6-A45F-382C9102212B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1242A195-DA1B-41C6-A45F-382C9102212B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1242A195-DA1B-41C6-A45F-382C9102212B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B06481-0578-4A6D-B4ED-95161940E033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B06481-0578-4A6D-B4ED-95161940E033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B06481-0578-4A6D-B4ED-95161940E033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B06481-0578-4A6D-B4ED-95161940E033}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
