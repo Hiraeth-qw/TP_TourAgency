@@ -119,19 +119,27 @@ namespace MicroservicePayment.Controllers
 
         // POST: api/payment/refund
         [HttpPost("refund")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize]
         public async Task<IActionResult> RefundPayment([FromBody] RefundRequest request)
         {
             var payment = await _context.Payment.FindAsync(request.PaymentId);
 
             if (payment == null)
             {
-                return NotFound($"Payment with ID {request.PaymentId} not found.");
+                return NotFound(new RefundResponse
+                {
+                    IsSuccess = false,
+                    Message = $"Payment with ID {request.PaymentId} not found."
+                });
             }
 
             if (payment.Status != PaymentStatus.Success)
             {
-                return Conflict($"Cannot refund payment. Current status is {payment.Status}.");
+                return Conflict(new RefundResponse
+                {
+                    IsSuccess = false,
+                    Message = $"Cannot refund. Current status: {payment.Status}"
+                });
             }
 
             payment.Status = PaymentStatus.Refunded;
@@ -140,10 +148,12 @@ namespace MicroservicePayment.Controllers
             _context.Payment.Update(payment);
             await _context.SaveChangesAsync();
 
-            return Ok(new
+            return Ok(new RefundResponse
             {
+                IsSuccess = true,
                 Message = "Payment successfully refunded.",
-                NewStatus = payment.Status.ToString()
+                NewStatus = payment.Status.ToString(),
+                RefundedAt = DateTime.UtcNow
             });
         }
     }

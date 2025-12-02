@@ -5,8 +5,9 @@ namespace MicroservicePayment.DTOs
     public class RefundRequest
     {
         [Required]
-        [Range(1, int.MaxValue)]
         public int PaymentId { get; set; }
-        public string? Reason { get; set; }
+
+        [Required]
+        public string Reason { get; set; } = string.Empty;
     }
 }
