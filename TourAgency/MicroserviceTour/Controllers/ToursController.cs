@@ -169,7 +169,6 @@ namespace MicroserviceTour.Controllers
         public async Task<IActionResult> ReserveSeat(int id)
         {
             var tour = await _context.Tour.FindAsync(id);
-
             if (tour == null) return NotFound();
 
             if (tour.AvailableSeats > 0)
@@ -182,6 +181,18 @@ namespace MicroserviceTour.Controllers
             {
                 return Conflict("No available seats.");
             }
+        }
+
+        [HttpPatch("{id}/release-seat")]
+        [Authorize]
+        public async Task<IActionResult> ReleaseSeat(int id)
+        {
+            var tour = await _context.Tour.FindAsync(id);
+            if (tour == null) return NotFound();
+
+            tour.AvailableSeats++;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         private bool TourExists(int id)
