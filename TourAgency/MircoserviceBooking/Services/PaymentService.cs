@@ -15,5 +15,13 @@ namespace MicroserviceBooking.Services
 
             return await response.Content.ReadFromJsonAsync<PaymentResponse>();
         }
+
+        public async Task<RefundResponse> RefundPaymentAsync(RefundRequest request, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _client.PostAsJsonAsync("refund", request);
+
+            return await response.Content.ReadFromJsonAsync<RefundResponse>();
+        }
     }
 }

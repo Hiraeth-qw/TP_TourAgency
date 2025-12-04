@@ -16,7 +16,7 @@
         public int TourId { get; set; }
         public int NumberOfSeats { get; set; }
         public decimal TotalAmount { get; set; }
-        public DateTime BookingDate { get; set; } = DateTime.UtcNow;
+        public DateTime BookingDate { get; set; } = DateTime.UtcNow.AddHours(3);
         public BookingStatus Status { get; set; } = BookingStatus.PendingPartners;
         public int? PaymentId { get; set; }
         public string? FailureReason { get; set; }

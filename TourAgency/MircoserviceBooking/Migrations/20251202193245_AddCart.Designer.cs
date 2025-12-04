@@ -4,6 +4,7 @@ using MicroserviceBooking.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MicroserviceBooking.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20251202193245_AddCart")]
+    partial class AddCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace MicroserviceBooking.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("MicroserviceBooking.Models.CartItem", b =>
@@ -84,7 +87,7 @@ namespace MicroserviceBooking.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("MicroserviceBooking.Models.SingleConfirmation", b =>
@@ -111,7 +114,7 @@ namespace MicroserviceBooking.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.ToTable("SingleConfirmations", (string)null);
+                    b.ToTable("SingleConfirmations");
                 });
 
             modelBuilder.Entity("MicroserviceBooking.Models.SingleConfirmation", b =>

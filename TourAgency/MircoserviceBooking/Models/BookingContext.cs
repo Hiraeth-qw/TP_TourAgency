@@ -13,5 +13,6 @@ namespace MicroserviceBooking.Models
                 .Property(p => p.Status)
                 .HasConversion<string>();
         }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }

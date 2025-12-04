@@ -13,10 +13,19 @@ namespace MicroserviceBooking.Services
 
         public async Task<ReadTour?> GetTourAsync(int id) => await _client.GetFromJsonAsync<ReadTour>($"{id}");
 
-        public async Task<bool> ReserveSeatAsync(int id, string token)
+        public async Task<bool> ReserveSeatAsync(int id, int numberOfSeats, string token)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await _client.PatchAsync($"{id}/reserve-seat", null);
+            var requestData = new { Quantity = numberOfSeats };
+            var response = await _client.PatchAsJsonAsync($"{id}/reserve-seat", requestData);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ReleaseSeatAsync(int id, int numberOfSeats, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var requestData = new { Quantity = numberOfSeats };
+            var response = await _client.PatchAsJsonAsync($"{id}/release-seat", requestData);
             return response.IsSuccessStatusCode;
         }
     }
