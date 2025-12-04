@@ -191,11 +191,41 @@ namespace MicroserviceBooking.Controllers
                 return Conflict(booking.FailureReason);
             }
 
-            // Оплата
+            await _context.SaveChangesAsync();
+            return Ok(new
+            {
+                Message = "Booking created. Waiting for payment.",
+                BookingId = booking.Id,
+                AmountToPay = booking.TotalAmount,
+                Status = booking.Status.ToString()
+            });
+
+        }
+
+        // POST: api/booking/{id}/pay
+        [HttpPost("{id}/pay")]
+        public async Task<IActionResult> PayForBooking(int id)
+        {
+            var currentUserId = GetUserId();
+            var token = GetToken();
+            if (currentUserId == null || token == null) return Unauthorized();
+
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null) return NotFound("Booking not found.");
+
+            bool isStaff = User.IsInRole("Admin") || User.IsInRole("Manager");
+            if (booking.UserId != currentUserId && !isStaff) return Forbid();
+
+            if (booking.Status == BookingStatus.Confirmed)
+                return BadRequest("Booking is already paid.");
+
+            if (booking.Status != BookingStatus.PendingPayment)
+                return BadRequest($"Cannot pay for booking with status {booking.Status}.");
+
             var payReq = new PaymentRequest
             {
                 BookingId = booking.Id,
-                UserId = targetUserId,
+                UserId = booking.UserId,
                 Amount = booking.TotalAmount
             };
 
@@ -206,14 +236,16 @@ namespace MicroserviceBooking.Controllers
                 booking.Status = BookingStatus.Confirmed;
                 booking.PaymentId = paymentResult.Id;
                 await _context.SaveChangesAsync();
-                return Ok(new { Message = "Booking Confirmed", BookingId = booking.Id });
+
+                return Ok(new { Message = "Payment successful. Booking confirmed.", BookingId = booking.Id });
             }
             else
             {
-                booking.Status = BookingStatus.Failed;
-                booking.FailureReason = paymentResult?.FailureReason ?? "Payment failed.";
-                await _context.SaveChangesAsync();
-                return BadRequest(new { Message = "Payment failed", Reason = booking.FailureReason });
+                return BadRequest(new
+                {
+                    Message = "Payment failed. Please try again.",
+                    Reason = paymentResult?.FailureReason ?? "Unknown error"
+                });
             }
         }
 

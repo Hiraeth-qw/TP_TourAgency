@@ -19,7 +19,7 @@ namespace MicroservicePayment.Models
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.UtcNow.AddHours(3);
         public PaymentStatus Status { get; set; }
         public string? FailureReason { get; set; }
     }

@@ -62,13 +62,20 @@ namespace MicroservicePayment.Controllers
             _context.Payment.Add(payment);
             await _context.SaveChangesAsync();
 
+            var response = new PaymentResponse
+            {
+                Id = payment.Id,
+                Status = payment.Status.ToString(),
+                FailureReason = payment.FailureReason
+            };
+
             if (isSuccess)
             {
-                return Ok(payment);
+                return Ok(response);
             }
             else
             {
-                return BadRequest(payment);
+                return BadRequest(response);
             }
         }
 
