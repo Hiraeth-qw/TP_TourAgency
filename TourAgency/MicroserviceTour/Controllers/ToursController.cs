@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer;
+using MicroserviceTour.DTOs;
+using MicroserviceTour.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MicroserviceTour.Models;
-using MicroserviceTour.DTOs;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MicroserviceTour.Controllers
 {
@@ -166,22 +167,28 @@ namespace MicroserviceTour.Controllers
         // PATCH: api/Tours/5/reserve-seat
         [HttpPatch("{id}/reserve-seat")]
         [Authorize]
-        public async Task<IActionResult> ReserveSeat(int id)
+        public async Task<IActionResult> ReserveSeat(int id, [FromBody] SeatUpdate dto)
         {
             var tour = await _context.Tour.FindAsync(id);
-
             if (tour == null) return NotFound();
 
-            if (tour.AvailableSeats > 0)
-            {
-                tour.AvailableSeats--;
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            else
-            {
-                return Conflict("No available seats.");
-            }
+            if (tour.AvailableSeats < dto.Quantity) return BadRequest("Not enough seats.");
+
+            tour.AvailableSeats -= dto.Quantity;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPatch("{id}/release-seat")]
+        [Authorize]
+        public async Task<IActionResult> ReleaseSeat(int id, [FromBody] SeatUpdate dto)
+        {
+            var tour = await _context.Tour.FindAsync(id);
+            if (tour == null) return NotFound();
+
+            tour.AvailableSeats+= dto.Quantity;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         private bool TourExists(int id)
