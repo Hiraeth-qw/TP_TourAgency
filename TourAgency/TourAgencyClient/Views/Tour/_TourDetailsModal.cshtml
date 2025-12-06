@@ -1,0 +1,56 @@
+﻿@model TourAgencyClient.DTOs.TourRead;
+
+<div class="modal-header bg-main-accent">
+    <h5 class="modal-title">@Model.Title</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">Место</th>
+                <td>@Model.Location</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата начала</th>
+                <td>@Model.StartDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата окончания</th>
+                <td>@Model.EndDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена за одно место</th>
+                <td>@Model.Price.ToString("C")</td>
+            </tr>
+            <tr>
+                <th scope="row">Достуные места</th>
+                <td>@Model.AvailableSeats</td>
+            </tr>
+            @if (Model.PartnerNames.Any())
+            {
+                <tr>
+                    <th scope="row">Партнёры</th>
+                    <td>
+                        <ul class="list-unstyled">
+                            @foreach (var name in Model.PartnerNames)
+                            {
+                                <li><span class="badge bg-secondary">@name</span></li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h6 class="mt-4">Описание</h6>
+    <p>@Model.Description</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+    <a href="#" class="btn btn-primary" data-tour-id="@Model.Id">
+        Забронировать (ID: @Model.Id)
+    </a>
+</div>

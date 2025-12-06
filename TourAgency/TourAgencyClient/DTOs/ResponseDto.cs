@@ -1,4 +1,4 @@
-﻿namespace TourAgencyClient.Services
+﻿namespace TourAgencyClient.DTOs
 {
     public class ResponseDto<T>
     {

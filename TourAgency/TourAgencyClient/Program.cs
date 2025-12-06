@@ -28,6 +28,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BaseService>();
+builder.Services.AddScoped<TourService>();
+builder.Services.AddScoped<PartnerService>();
 
 var defaultCulture = "ru-RU";
 var localizationOptions = new RequestLocalizationOptions

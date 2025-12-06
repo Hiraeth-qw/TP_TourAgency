@@ -1,22 +1,25 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TourAgencyClient.Models;
-
+using TourAgencyClient.DTOs;
+using TourAgencyClient.Services;
 
 namespace TourAgencyClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly TourService _tourService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(TourService tourService)
         {
-            _logger = logger;
+            _tourService = tourService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var tours = await _tourService.GetAllToursAsync();
+
+            return View(tours);
         }
 
         public IActionResult Privacy()
