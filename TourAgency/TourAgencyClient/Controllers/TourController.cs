@@ -4,7 +4,6 @@ using TourAgencyClient.Models;
 
 namespace TourAgencyClient.Controllers
 {
-    // Этот контроллер будет обрабатывать /Tour/Details
     public class TourController : Controller
     {
         private readonly TourService _tourService;

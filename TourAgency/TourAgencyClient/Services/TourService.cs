@@ -30,7 +30,6 @@ namespace TourAgencyClient.Services
                 tourDetails.PartnerNames = await _partnerService.GetPartnerNamesByIdsAsync(tourDetails.PartnerIds);
             }
 
-            // 3. Возвращаем обогащенный DTO
             return tourDetails;
         }
     }

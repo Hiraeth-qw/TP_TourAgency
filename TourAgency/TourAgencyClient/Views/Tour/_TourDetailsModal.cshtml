@@ -32,10 +32,10 @@
                 <tr>
                     <th scope="row">Партнёры</th>
                     <td>
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled mb-0">
                             @foreach (var name in Model.PartnerNames)
                             {
-                                <li><span class="badge bg-secondary">@name</span></li>
+                                <li><small class="text-muted">@name</small></li>
                             }
                         </ul>
                     </td>
@@ -47,10 +47,21 @@
     <h6 class="mt-4">Описание</h6>
     <p>@Model.Description</p>
 </div>
+
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
 
-    <a href="#" class="btn btn-primary" data-tour-id="@Model.Id">
-        Забронировать (ID: @Model.Id)
-    </a>
+    @if (Model.AvailableSeats > 0)
+    {
+        <button type="button"
+                class="btn btn-custom open-quantity-modal-btn"
+                data-tour-id="@Model.Id"
+                data-tour-title="@Model.Title">
+            Добавить в корзину
+        </button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary" disabled>Нет мест</button>
+    }
 </div>

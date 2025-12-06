@@ -30,6 +30,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<TourService>();
 builder.Services.AddScoped<PartnerService>();
+builder.Services.AddScoped<BookingService>();
+
 
 var defaultCulture = "ru-RU";
 var localizationOptions = new RequestLocalizationOptions
