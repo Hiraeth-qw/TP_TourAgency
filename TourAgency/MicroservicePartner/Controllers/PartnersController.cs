@@ -13,6 +13,7 @@ namespace MicroservicePartner.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PartnersController : ControllerBase
     {
         private readonly PartnerContext _context;
@@ -24,7 +25,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners
         [HttpGet]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<IEnumerable<Partner>>> GetPartners()
         {
             return await _context.Partners.ToListAsync();
@@ -32,7 +32,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<Partner>> GetPartner(long id)
         {
             var partner = await _context.Partners.FindAsync(id);
@@ -205,7 +204,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/partners/hotels
         [HttpGet("hotels")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<IEnumerable<partnerHotel>>> GetHotels()
         {
             var hotels = await _context.Partners.OfType<partnerHotel>().ToListAsync();
@@ -220,7 +218,6 @@ namespace MicroservicePartner.Controllers
         
         // GET: api/partners/hotels/{id}
         [HttpGet("hotels/{id}")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<partnerHotel>> GetHotel(long id)
         {
             var hotel = await _context.Partners.OfType<partnerHotel>().FirstOrDefaultAsync(h => h.Id == id);
@@ -235,7 +232,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners/operators
         [HttpGet("operators")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<IEnumerable<partnerOperator>>> GetOperators()
         {
             var operators = await _context.Partners.OfType<partnerOperator>().ToListAsync();
@@ -250,7 +246,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners/operators/{id}
         [HttpGet("operators/{id}")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<partnerOperator>> GetOperator(long id)
         {
             var @operator = await _context.Partners.OfType<partnerOperator>().FirstOrDefaultAsync(o => o.Id == id);
@@ -279,7 +274,6 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners/transport/{id}
         [HttpGet("transport/{id}")]
-        [Authorize(Roles = "Admin, Manager, ContentManager")]
         public async Task<ActionResult<partnerTransport>> GetTransportPartner(long id)
         {
             var transport = await _context.Partners.OfType<partnerTransport>().FirstOrDefaultAsync(t => t.Id == id);
@@ -293,7 +287,6 @@ namespace MicroservicePartner.Controllers
         }
 
         [HttpPost("confirm-booking")]
-        [Authorize]
         public async Task<ActionResult<bool>> ConfirmBooking([FromBody] PartnerConfirmationRequest request)
         {
             var partner = await _context.Partners.FindAsync(request.PartnerId);
