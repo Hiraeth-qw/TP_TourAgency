@@ -34,5 +34,33 @@ namespace TourAgencyClient.Controllers
                 return StatusCode(500, new { message = "Не удалось добавить тур в корзину. Проверьте, доступен ли тур и места." });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Cart()
+        {
+            var cartItems = await _bookingService.GetMyCartAsync();
+            return View(cartItems);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBooking([FromBody] CreateBookingRequest request)
+        {
+            if (!ModelState.IsValid) return BadRequest("Некорректные данные.");
+
+            var response = await _bookingService.CreateBookingAsync(request);
+
+            if (response.IsSuccess)
+            {
+                return Ok(new { message = "Бронирование успешно создано! Ожидается оплата." });
+            }
+            else
+            {
+                string errorMsg = response.ErrorMessage ?? "Ошибка при создании бронирования.";
+                if (response.StatusCode == 409)
+                    errorMsg = "К сожалению, места закончились или партнер отклонил запрос.";
+
+                return StatusCode(response.StatusCode == 0 ? 500 : response.StatusCode, new { message = errorMsg });
+            }
+        }
     }
 }
