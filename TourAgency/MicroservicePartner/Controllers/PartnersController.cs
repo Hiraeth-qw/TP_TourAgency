@@ -25,6 +25,7 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Partner>>> GetPartners()
         {
             return await _context.Partners.ToListAsync();
@@ -32,6 +33,7 @@ namespace MicroservicePartner.Controllers
 
         // GET: api/Partners/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Partner>> GetPartner(long id)
         {
             var partner = await _context.Partners.FindAsync(id);
