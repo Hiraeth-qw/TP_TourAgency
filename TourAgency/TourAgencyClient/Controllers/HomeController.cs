@@ -8,18 +8,19 @@ namespace TourAgencyClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly TourService _tourService;
-
-        public HomeController(TourService tourService)
+        public IActionResult Index()
         {
-            _tourService = tourService;
+            return View();
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Search(TourSearchQuery query)
         {
-            var tours = await _tourService.GetAllToursAsync();
-
-            return View(tours);
+            return RedirectToAction("List", "Tour", new
+            {
+                location = query.Location,
+                startDate = query.StartDate
+            });
         }
 
         public IActionResult Privacy()

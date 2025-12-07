@@ -66,3 +66,8 @@ a {
     background-color: var(--bs-primary) !important;
     color: white;
 }
+
+.bg-secondary-accent {
+    background-color: var(--bs-secondary) !important;
+    color: white;
+}

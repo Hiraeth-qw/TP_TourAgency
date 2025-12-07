@@ -1,101 +1,46 @@
-﻿@model List<TourAgencyClient.DTOs.TourRead>
+﻿@model TourAgencyClient.DTOs.TourSearchQuery;
 
 @{
-    ViewData["Title"] = "Каталог Туров";
+    ViewData["Title"] = "Главная страница";
 }
 
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 col-md-10">
 
-<div class="text-center bg-main-accent p-4 mb-4 rounded">
-    <h1 class="display-4">Каталог Туров</h1>
-    <p>Откройте для себя незабываемые приключения по всему миру.</p>
-</div>
-
-<div class="container">
-    @if (Model == null || Model.Count == 0)
-    {
-        <div class="alert alert-warning" role="alert">
-            К сожалению, на данный момент нет доступных туров.
+        <div class="p-5 text-center shadow-lg rounded bg-main-accent" style="border: 2px solid #BC986A;">
+            <h1 class="display-4">Туристическое агентство для вас</h1>
+            <p>Найдите свой тур в поисках приключений</p>
         </div>
-    }
-    else
-    {
-        <div class="row">
-            @foreach (var tour in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card card-custom">
-                        <div class="card-header bg-main-accent">
-                            <h5 class="card-title mb-0">@tour.Title</h5>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <p class="card-text flex-grow-1">
-                                @(tour.Description.Length > 100 ? tour.Description.Substring(0, 100) + "..." : tour.Description)
-                            </p>
 
-                            <hr />
+        <h3 class="text-center mt-5 mb-3" style="color: #BC986A;">Быстрый поиск тура</h3>
 
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-price">
-                                    @tour.Price руб.
-                                </span>
-                                <span class="badge bg-secondary">
-                                    Осталось мест: @tour.AvailableSeats
-                                </span>
-                            </div>
+        <form asp-controller="Home" asp-action="Search" method="get" class="p-4 rounded shadow-sm" style="background-color: #DAAD86;">
+            <div class="row g-3 align-items-end">
 
-                            <div class="mt-auto">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#tourDetailsModal"
-                                   data-tour-id="@tour.Id" class="btn btn-custom w-100 tour-details-btn">
-                                    Подробнее
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-5">
+                    <label for="location" class="form-label text-white fw-bold">Место (необязательно)</label>
+                    <input type="text"
+                           id="location"
+                           name="Location"
+                           class="form-control form-control-lg"
+                           placeholder="Например: Италия, Париж..." />
                 </div>
-            }
-        </div>
-    }
-</div>
 
-<div class="modal fade" id="tourDetailsModal" tabindex="-1" aria-labelledby="tourDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-body text-center p-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Загрузка...</span>
+                <div class="col-md-5">
+                    <label for="startDate" class="form-label text-white fw-bold">Дата начала (необязательно)</label>
+                    <input type="date"
+                           id="startDate"
+                           name="StartDate"
+                           class="form-control form-control-lg" />
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-lg fw-bold" style="background-color: #659DBD; color: white;">
+                        <i class="bi bi-search"></i> Найти
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </form>
 
-<div class="modal fade" id="quantitySelectionModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-header bg-main-accent text-white">
-                <h5 class="modal-title" id="quantityModalTitle">Выбор мест</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <form id="addToCartForm" action="/Booking/AddToCart" method="post">
-                    <input type="hidden" id="hiddenTourId" name="TourId" />
-
-                    <div class="mb-3">
-                        <label for="touristsNumber" class="form-label">Количество мест (макс. 10):</label>
-                        <input type="number" id="touristsNumber" name="TouristsNumber" class="form-control form-control-lg text-center"
-                               value="1" min="1" required />
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" id="submitAddToCart" class="btn btn-custom">
-                            Подтвердить
-                        </button>
-                    </div>
-
-                    <div id="quantityError" class="text-danger mt-2 text-center small" style="display:none;"></div>
-                </form>
-            </div>
-        </div>
     </div>
 </div>

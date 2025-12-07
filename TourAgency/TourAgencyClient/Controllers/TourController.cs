@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TourAgencyClient.Services;
+using TourAgencyClient.DTOs;
 using TourAgencyClient.Models;
+using TourAgencyClient.Services;
 
 namespace TourAgencyClient.Controllers
 {
@@ -11,6 +12,23 @@ namespace TourAgencyClient.Controllers
         public TourController(TourService tourService)
         {
             _tourService = tourService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> List(TourSearchQuery query)
+        {
+            if (query.Location != null || query.StartDate.HasValue)
+            {
+                ViewData["SearchQuery"] = $"Поиск: Место '{query.Location ?? "любое"}', Дата с '{query.StartDate?.ToString("dd.MM.yyyy") ?? "любая"}'";
+            }
+            else
+            {
+                ViewData["SearchQuery"] = "Все доступные туры.";
+            }
+
+            var tours = await _tourService.GetToursAsync(query);
+
+            return View("ToursList", tours);
         }
 
         [HttpGet]

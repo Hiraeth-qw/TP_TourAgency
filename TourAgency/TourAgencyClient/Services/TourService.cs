@@ -1,5 +1,7 @@
-﻿using TourAgencyClient.Services;
+﻿using System.Web;
+using Microsoft.AspNetCore.WebUtilities;
 using TourAgencyClient.DTOs;
+using TourAgencyClient.Services;
 
 namespace TourAgencyClient.Services
 {
@@ -12,9 +14,30 @@ namespace TourAgencyClient.Services
             _partnerService = partnerService;
         }
 
-        public async Task<List<TourRead>?> GetAllToursAsync()
+        public async Task<List<TourRead>?> GetToursAsync(TourSearchQuery query)
         {
-            var result = await SendAsync<List<TourRead>>("TourApi", HttpMethod.Get, "/api/tours");
+            var url = "/api/tours";
+
+            var queryParams = new Dictionary<string, string>();
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Location))
+                {
+                    queryParams.Add("location", query.Location);
+                }
+                if (query.StartDate.HasValue)
+                {
+                    queryParams.Add("startDate", query.StartDate.Value.ToString("yyyy-MM-dd"));
+                }
+            }
+
+            if (queryParams.Any())
+            {
+                url = QueryHelpers.AddQueryString(url, queryParams);
+            }
+
+            var result = await SendAsync<List<TourRead>>("TourApi", HttpMethod.Get, url);
 
             return result ?? new List<TourRead>();
         }
