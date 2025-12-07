@@ -29,7 +29,8 @@ namespace TourAgencyClient.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var result = await _baseService.SendAsync<AuthResponseDto>("UserApi", HttpMethod.Post, "/api/account/login", model);
+            var resp = await _baseService.SendAsync<AuthResponseDto>("UserApi", HttpMethod.Post, "/api/account/login", model);
+            var result = resp.Result;
 
             if (result != null && !string.IsNullOrEmpty(result.Token))
             {
@@ -52,6 +53,42 @@ namespace TourAgencyClient.Controllers
             }
 
             ModelState.AddModelError("", "Invalid login attempt");
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var result = await _baseService.SendAsync<object>("UserApi", HttpMethod.Post, "/api/account/register", model);
+
+            if (result.IsSuccess)
+            {
+                TempData["ToastMessage"] = "Регистрация прошла успешно! Теперь вы можете войти.";
+                TempData["ToastType"] = "Success";
+                return RedirectToAction("Login", "Auth");
+            }
+            else
+            {
+                string errorMessage = result.ErrorMessage ?? "Произошла неизвестная ошибка при регистрации.";
+
+                if (result.StatusCode == 400)
+                {
+                    ModelState.AddModelError("", "Пользователь с таким Email уже существует.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", errorMessage);
+                }
+            }
+
             return View(model);
         }
 

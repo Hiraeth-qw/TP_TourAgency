@@ -37,14 +37,16 @@ namespace TourAgencyClient.Services
                 url = QueryHelpers.AddQueryString(url, queryParams);
             }
 
-            var result = await SendAsync<List<TourRead>>("TourApi", HttpMethod.Get, url);
+            var resp = await SendAsync<List<TourRead>>("TourApi", HttpMethod.Get, url);
+            var result = resp.Result;
 
             return result ?? new List<TourRead>();
         }
 
         public async Task<TourRead?> GetTourByIdAsync(int tourId)
         {
-            var tourDetails = await SendAsync<TourRead>("TourApi", HttpMethod.Get, $"/api/tours/{tourId}");
+            var resp = await SendAsync<TourRead>("TourApi", HttpMethod.Get, $"/api/tours/{tourId}");
+            var tourDetails = resp.Result;
 
             if (tourDetails == null) return null;
 

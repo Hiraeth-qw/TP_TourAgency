@@ -21,14 +21,15 @@ namespace TourAgencyClient.Services
             var partnerNames = new List<string>();
 
             var tasks = partnerIds.Select(id => SendAsync<PartnerNameDto>("PartnerApi", HttpMethod.Get, $"/api/partners/{id}")).ToList();
+            
 
             var results = await Task.WhenAll(tasks);
 
-            foreach (var result in results)
+            foreach (var response in results)
             {
-                if (result != null && !string.IsNullOrEmpty(result.Name))
+                if (response.IsSuccess && response.Result != null && !string.IsNullOrEmpty(response.Result.Name))
                 {
-                    partnerNames.Add(result.Name);
+                    partnerNames.Add(response.Result.Name);
                 }
                 else
                 {

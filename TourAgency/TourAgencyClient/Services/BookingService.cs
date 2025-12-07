@@ -11,7 +11,8 @@ namespace TourAgencyClient.Services
 
         public async Task<bool> AddToCartAsync(AddItemToCartDto dto)
         {
-            var result = await SendAsync<object>("BookingApi", HttpMethod.Post, "api/booking/plan/add", dto);
+            var resp = await SendAsync<object>("BookingApi", HttpMethod.Post, "api/booking/plan/add", dto);
+            var result = resp.Result;
 
             return result != null;
         }

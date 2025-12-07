@@ -2,6 +2,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
+using TourAgencyClient.DTOs;
 
 namespace TourAgencyClient.Services
 {
@@ -16,7 +17,7 @@ namespace TourAgencyClient.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<T?> SendAsync<T>(string clientName, HttpMethod method, string url, object? data = null)
+        public async Task<ResponseDto<T>> SendAsync<T>(string clientName, HttpMethod method, string url, object? data = null)
         {
             var client = _httpClientFactory.CreateClient(clientName);
             var message = new HttpRequestMessage(method, url);
@@ -36,13 +37,30 @@ namespace TourAgencyClient.Services
 
             var apiContent = await response.Content.ReadAsStringAsync();
 
+            var responseDto = new ResponseDto<T>
+            {
+                StatusCode = (int)response.StatusCode
+            };
+
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<T>(apiContent);
+                try
+                {
+                    responseDto.Result = JsonConvert.DeserializeObject<T>(apiContent);
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"JSON Deserialization Error: {ex.Message}");
+                    responseDto.IsSuccess = false;
+                    responseDto.ErrorMessage = $"Failed to deserialize response: {ex.Message}";
+                }
             }
-
-            Console.WriteLine($"API Error: {response.StatusCode} - {apiContent}");
-            return default;
+            else
+            {
+                responseDto.IsSuccess = false;
+                responseDto.ErrorMessage = $"API вернул ошибку: {response.StatusCode}. Подробности: {apiContent}";
+            }
+            return responseDto;
         }
     }
 }
