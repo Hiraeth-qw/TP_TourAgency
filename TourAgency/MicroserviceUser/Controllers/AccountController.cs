@@ -78,6 +78,8 @@ namespace MicroserviceUser.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim("FirstName", user.firstName),
+                    new Claim("LastName", user.lastName),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
