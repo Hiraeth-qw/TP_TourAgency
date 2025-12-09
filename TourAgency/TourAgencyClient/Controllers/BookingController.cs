@@ -62,5 +62,32 @@ namespace TourAgencyClient.Controllers
                 return StatusCode(response.StatusCode == 0 ? 500 : response.StatusCode, new { message = errorMsg });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MyBookings()
+        {
+            var bookings = await _bookingService.GetMyBookingsAsync();
+            return View(bookings);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Pay(int id)
+        {
+            var response = await _bookingService.PayForBookingAsync(id);
+            if (response.IsSuccess)
+                return Ok(new { message = "Оплата прошла успешно!" });
+
+            return BadRequest(new { message = response.ErrorMessage ?? "Ошибка оплаты." });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var response = await _bookingService.CancelBookingAsync(id);
+            if (response.IsSuccess)
+                return Ok(new { message = "Бронирование отменено." });
+
+            return BadRequest(new { message = response.ErrorMessage ?? "Ошибка отмены." });
+        }
     }
 }

@@ -31,6 +31,7 @@ builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<TourService>();
 builder.Services.AddScoped<PartnerService>();
 builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<AccountService>();
 
 
 var defaultCulture = "ru-RU";

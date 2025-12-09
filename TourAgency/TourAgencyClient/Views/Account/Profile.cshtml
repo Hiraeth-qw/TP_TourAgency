@@ -1,0 +1,59 @@
+﻿@model TourAgencyClient.Models.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "Мой профиль";
+}
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-main-accent text-white text-center py-4">
+                <i class="bi bi-person-circle display-1"></i>
+                <h3 class="mt-2">@Model.FirstName @Model.LastName</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Телефон:</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Не указан" : Model.PhoneNumber)</p>
+                <hr />
+                <div class="d-grid">
+                    <a asp-controller="Booking" asp-action="MyBookings" class="btn btn-custom">
+                        Мои бронирования
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-header bg-main-accent text-white">
+                <h5 class="mb-0"><i class="bi bi-bar-chart-fill me-2"></i> Статистика путешествий</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.CountryStats != null && Model.CountryStats.Any())
+                {
+                    <p class="text-muted">Страны, которые вы посетили:</p>
+                    <div class="row">
+                        @foreach (var stat in Model.CountryStats)
+                        {
+                            <div class="col-sm-6 col-lg-4 mb-3">
+                                <div class="p-3 border rounded text-center">
+                                    <h4 class="text-primary fw-bold">@stat.VisitCount</h4>
+                                    <span class="text-muted">@stat.Country</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-globe2 display-4 mb-3 d-block"></i>
+                        <p>Вы пока никуда не ездили. Самое время начать!</p>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-custom">Найти тур</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
