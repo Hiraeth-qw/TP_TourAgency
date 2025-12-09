@@ -2,12 +2,15 @@
 
 @{
     ViewData["Title"] = "Каталог Туров";
+    var currentQuery = ViewData["CurrentSearchQuery"] as TourAgencyClient.DTOs.TourSearchQuery;
 }
 
 
 <div class="text-center bg-main-accent p-4 mb-4 rounded">
     <h1 class="display-4">Каталог Туров</h1>
 </div>
+
+<partial name="_TourSearchForm" model="currentQuery" />
 
 <div class="container">
     @if (Model == null || Model.Count == 0)

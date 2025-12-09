@@ -17,6 +17,8 @@ namespace TourAgencyClient.Controllers
         [HttpGet]
         public async Task<IActionResult> List(TourSearchQuery query)
         {
+            ViewData["CurrentSearchQuery"] = query;
+
             if (query.Location != null || query.StartDate.HasValue)
             {
                 ViewData["SearchQuery"] = $"Поиск: Место '{query.Location ?? "любое"}', Дата с '{query.StartDate?.ToString("dd.MM.yyyy") ?? "любая"}'";
