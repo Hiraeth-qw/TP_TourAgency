@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Каталог Туров";
     var currentQuery = ViewData["CurrentSearchQuery"] as TourAgencyClient.DTOs.TourSearchQuery;
+    bool isContentManager = User.IsInRole("ContentManager");
 }
 
 
@@ -10,13 +11,21 @@
     <h1 class="display-4">Каталог Туров</h1>
 </div>
 
+@if (isContentManager)
+{
+    <div class="position-absolute top-50 end-0 translate-middle-y me-4">
+        <a asp-action="Create" class="btn btn-light text-primary fw-bold shadow">
+            <i class="bi bi-plus-circle-fill"></i> Добавить тур
+        </a>
+    </div>
+}
 <partial name="_TourSearchForm" model="currentQuery" />
 
 <div class="container">
     @if (Model == null || Model.Count == 0)
     {
         <div class="alert alert-warning" role="alert">
-            К сожалению, на данный момент нет доступных туров.
+            К сожалению, на данный момент нет доступных туров.a
         </div>
     }
     else
@@ -24,10 +33,22 @@
         <div class="row">
             @foreach (var tour in Model)
             {
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4" id="tour-card-@tour.Id">
                     <div class="card card-custom">
                         <div class="card-header bg-main-accent">
-                            <h5 class="card-title mb-0">@tour.Title</h5>
+                            <h5 class="card-title mb-0" title="@tour.Title">@tour.Title</h5>
+
+                            @if (isContentManager)
+                            {
+                                <div class="end">
+                                    <a asp-action="Edit" asp-route-id="@tour.Id" class="text-white me-2" title="Редактировать">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="#" class="text-white delete-tour-btn" data-id="@tour.Id" title="Удалить">
+                                        <i class="bi bi-x-lg"></i>
+                                    </a>
+                                </div>
+                            }
                         </div>
                         <div class="card-body d-flex flex-column">
                             <p class="card-text flex-grow-1">
@@ -101,3 +122,30 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.delete-tour-btn').click(function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                var tourId = btn.data('id');
+
+                if (confirm('Вы действительно хотите удалить этот тур? Это действие необратимо.')) {
+                    $.ajax({
+                        url: '/Tour/Delete/' + tourId,
+                        type: 'POST',
+                        success: function(response) {
+                            showToast('Тур успешно удален.', true);
+                            $('#tour-card-' + tourId).fadeOut(500, function() { $(this).remove(); });
+                        },
+                        error: function(xhr) {
+                            var msg = xhr.responseJSON ? xhr.responseJSON.message : "Ошибка удаления.";
+                            showToast(msg, false);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

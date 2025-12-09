@@ -57,5 +57,19 @@ namespace TourAgencyClient.Services
 
             return tourDetails;
         }
+        public async Task<ResponseDto<object>> CreateTourAsync(TourCreateUpdate dto)
+        {
+            return await SendAsync<object>("TourApi", HttpMethod.Post, "/api/tours", dto);
+        }
+
+        public async Task<ResponseDto<object>> UpdateTourAsync(int id, TourCreateUpdate dto)
+        {
+            return await SendAsync<object>("TourApi", HttpMethod.Put, $"/api/tours/{id}", dto);
+        }
+
+        public async Task<ResponseDto<object>> DeleteTourAsync(int id)
+        {
+            return await SendAsync<object>("TourApi", HttpMethod.Delete, $"/api/tours/{id}");
+        }
     }
 }
