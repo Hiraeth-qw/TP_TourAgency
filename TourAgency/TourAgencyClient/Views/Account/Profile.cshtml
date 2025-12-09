@@ -15,7 +15,10 @@
                 <p><strong>Email:</strong> @Model.Email</p>
                 <p><strong>Телефон:</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Не указан" : Model.PhoneNumber)</p>
                 <hr />
-                <div class="d-grid">
+                <div class="d-grid gap-2">
+                    <a asp-action="Edit" class="btn btn-custom">
+                        <i class="bi bi-pencil-square"></i> Изменить профиль
+                    </a>
                     <a asp-controller="Booking" asp-action="MyBookings" class="btn btn-custom">
                         Мои бронирования
                     </a>
