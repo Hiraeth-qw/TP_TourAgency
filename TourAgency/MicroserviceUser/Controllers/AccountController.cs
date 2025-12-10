@@ -136,6 +136,25 @@ namespace MicroserviceUser.Controllers
             return BadRequest(result.Errors);
         }
 
+        // POST: api/account/remove-role
+        [HttpPost("remove-role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RemoveRole([FromBody] AssignRole model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return NotFound($"User {model.Email} not found.");
+
+            if (!await _roleManager.RoleExistsAsync(model.RoleName))
+                return BadRequest($"Role {model.RoleName} does not exist.");
+
+            var result = await _userManager.RemoveFromRoleAsync(user, model.RoleName);
+
+            if (result.Succeeded)
+                return Ok($"Successfully removed role '{model.RoleName}' from user '{model.Email}'.");
+
+            return BadRequest(result.Errors);
+        }
+
         //POST: api/account/edit-profile
         [HttpPatch("edit-profile")]
         [Authorize]
