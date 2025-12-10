@@ -1,0 +1,56 @@
+﻿@model TourAgencyClient.DTOs.ProfileEdit
+
+@{
+    ViewData["Title"] = "Редактирование профиля";
+}
+
+<div class="row justify-content-center my-5">
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow-lg p-3" style="border-top: 5px solid #8D8741;">
+
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4" style="color: #8D8741;">
+                    <i class="bi bi-person-fill me-2"></i> Изменить профиль
+                </h3>
+
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FirstName" class="form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LastName" class="form-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-custom btn-lg">
+                            Сохранить изменения
+                        </button>
+                        <a asp-action="Profile" class="btn btn-outline-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

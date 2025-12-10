@@ -10,5 +10,6 @@ namespace MicroserviceBooking.DTOs
         [Range(1, 10)]
         public int TouristsNumber { get; set; }
         public string? ClientUserId { get; set; }
+        public int? CartItemId { get; set; }
     }
 }

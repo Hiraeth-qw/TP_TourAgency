@@ -1,0 +1,82 @@
+﻿@model TourAgencyClient.DTOs.TourRead;
+@inject TourAgencyClient.Services.UserService UserService
+
+<div class="modal-header bg-main-accent">
+    <h5 class="modal-title">@Model.Title</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">Место</th>
+                <td>@Model.Location</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата начала</th>
+                <td>@Model.StartDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата окончания</th>
+                <td>@Model.EndDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена за одно место</th>
+                <td>@Model.Price.ToString("C")</td>
+            </tr>
+            <tr>
+                <th scope="row">Достуные места</th>
+                <td>@Model.AvailableSeats</td>
+            </tr>
+            @if (Model.PartnerNames.Any())
+            {
+                <tr>
+                    <th scope="row">Партнёры</th>
+                    <td>
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var name in Model.PartnerNames)
+                            {
+                                <li><small class="text-muted">@name</small></li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h6 class="mt-4">Описание</h6>
+    <p>@Model.Description</p>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+
+    @if (Model.AvailableSeats > 0)
+    {
+        bool isStaff = User.IsInRole("Manager") || User.IsInRole("Admin");
+        if (isStaff)
+        {
+            <button type="button"
+                    class="btn btn-custom open-booking-modal-btn"
+                    data-tour-id="@Model.Id"
+                    data-tour-title="@Model.Title"
+                    data-bs-target="#bookingModal" data-bs-toggle="modal">
+                <i class="bi bi-person-plus"></i> Забронировать для...
+            </button>
+        }
+        else
+        {
+            <button type="button"
+                    class="btn btn-custom open-quantity-modal-btn"
+                    data-tour-id="@Model.Id"
+                    data-tour-title="@Model.Title">
+                Добавить в корзину
+            </button>
+        }
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary" disabled>Нет мест</button>
+    }
+</div>

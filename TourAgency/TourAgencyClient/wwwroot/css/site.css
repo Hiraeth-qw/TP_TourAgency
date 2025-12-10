@@ -1,22 +1,73 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+:root {
+    --bs-primary: #BC986A;
+    --bs-light: #FBEEC1;
+    --bs-dark: #659DBD;
+    --bs-secondary: #DAAD86;
+    --bs-success: #8D8741;
+}
+
+body {
+    background-color: var(--bs-light);
+}
+
+.navbar {
+    background-color: var(--bs-dark) !important;
+}
+
+a {
+    color: var(--bs-primary);
+}
+
+.card-custom {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+    height: 100%;
+}
+
+.text-price {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.btn-custom {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark);
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success);
+    color: white;
+}
+
+.bg-main-accent {
+    background-color: var(--bs-primary) !important;
+    color: white;
+}
+
+.bg-secondary-accent {
+    background-color: var(--bs-secondary) !important;
+    color: white;
 }

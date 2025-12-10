@@ -1,22 +1,26 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TourAgencyClient.Models;
-
+using TourAgencyClient.DTOs;
+using TourAgencyClient.Services;
 
 namespace TourAgencyClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Search(TourSearchQuery query)
+        {
+            return RedirectToAction("List", "Tour", new
+            {
+                location = query.Location,
+                startDate = query.StartDate
+            });
         }
 
         public IActionResult Privacy()

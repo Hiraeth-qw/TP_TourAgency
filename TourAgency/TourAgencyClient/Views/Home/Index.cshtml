@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model TourAgencyClient.DTOs.TourSearchQuery;
+
+@{
+    ViewData["Title"] = "Главная страница";
+    var currentQuery = ViewData["CurrentSearchQuery"] as TourAgencyClient.DTOs.TourSearchQuery;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 col-md-10">
+
+        <div class="p-5 text-center shadow-lg rounded bg-main-accent" style="border: 2px solid #BC986A;">
+            <h1 class="display-4">Туристическое агентство для вас</h1>
+            <p>Найдите свой тур в поисках приключений</p>
+        </div>
+
+        <h3 class="text-center mt-5 mb-3" style="color: #BC986A;">Быстрый поиск тура</h3>
+        
+        <partial name="_TourSearchForm" model="currentQuery" />
+
+    </div>
 </div>

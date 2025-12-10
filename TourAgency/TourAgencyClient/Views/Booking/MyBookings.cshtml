@@ -1,0 +1,108 @@
+﻿@model List<TourAgencyClient.Models.BookingViewModel>
+
+@{
+    ViewData["Title"] = "Мои бронирования";
+}
+
+<h2 class="mb-4" style="color: #BC986A">Мои бронирования</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        У вас пока нет активных бронирований.
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var booking in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4" id="booking-card-@booking.Id">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-header d-flex flex-column justify-content-between bg-main-accent bg-main-accent text-dark">
+
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold">Заказ #@booking.Id</span>
+                            <span class="badge bg-light text-dark">@booking.Status</span>
+                        </div>
+
+                        <span class="small text-start">
+                            <i class="bi bi-clock"></i> Создан: @booking.BookingDate.ToString("dd.MM.yyyy HH:mm")
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">@booking.TourTitle</h5>
+
+                        <p class="text-muted small mb-3">
+                            <i class="bi bi-calendar-range"></i>
+                            @booking.TourStartDate.ToString("dd.MM.yyyy") — @booking.TourEndDate.ToString("dd.MM.yyyy")
+                        </p>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Количество мест:</span>
+                            <strong>@booking.NumberOfSeats</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Итого:</span>
+                            <strong class="text-price">@booking.TotalAmount.ToString("C")</strong>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                        @if (booking.Status == "Ожидание оплаты")
+                        {
+                            <button class="btn btn-success btn-action"
+                                    data-action="Pay"
+                                    data-id="@booking.Id">
+                                <i class="bi bi-credit-card"></i> Оплатить
+                            </button>
+                        }
+
+                        @if (booking.Status != "Отменено" && booking.Status != "Ошибка")
+                        {
+                            <button class="btn btn-outline-danger btn-action"
+                                    data-action="Cancel"
+                                    data-id="@booking.Id">
+                                <i class="bi bi-x-circle"></i> Отменить
+                            </button>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.btn-action').click(function() {
+                var btn = $(this);
+                var action = btn.data('action');
+                var id = btn.data('id');
+                var url = '/Booking/' + action;
+                var confirmText = action === "Pay" ? "Вы уверены, что хотите оплатить?" : "Вы действительно хотите отменить бронирование?";
+
+                if (!confirm(confirmText)) return;
+
+                btn.prop('disabled', true);
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: { id: id },
+                    success: function(response) {
+                        showToast(response.message, true);
+                        setTimeout(() => location.reload(), 1500);
+                    },
+                    error: function(xhr) {
+                        var msg = xhr.responseJSON ? xhr.responseJSON.message : "Ошибка выполнения.";
+                        showToast(msg, false);
+                        btn.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+}
