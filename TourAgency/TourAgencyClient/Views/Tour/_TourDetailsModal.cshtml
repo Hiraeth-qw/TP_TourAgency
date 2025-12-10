@@ -1,4 +1,5 @@
 ﻿@model TourAgencyClient.DTOs.TourRead;
+@inject TourAgencyClient.Services.UserService UserService
 
 <div class="modal-header bg-main-accent">
     <h5 class="modal-title">@Model.Title</h5>
@@ -53,12 +54,26 @@
 
     @if (Model.AvailableSeats > 0)
     {
-        <button type="button"
-                class="btn btn-custom open-quantity-modal-btn"
-                data-tour-id="@Model.Id"
-                data-tour-title="@Model.Title">
-            Добавить в корзину
-        </button>
+        bool isStaff = User.IsInRole("Manager") || User.IsInRole("Admin");
+        if (isStaff)
+        {
+            <button type="button"
+                    class="btn btn-custom open-booking-modal-btn"
+                    data-tour-id="@Model.Id"
+                    data-tour-title="@Model.Title"
+                    data-bs-target="#bookingModal" data-bs-toggle="modal">
+                <i class="bi bi-person-plus"></i> Забронировать для...
+            </button>
+        }
+        else
+        {
+            <button type="button"
+                    class="btn btn-custom open-quantity-modal-btn"
+                    data-tour-id="@Model.Id"
+                    data-tour-title="@Model.Title">
+                Добавить в корзину
+            </button>
+        }
     }
     else
     {

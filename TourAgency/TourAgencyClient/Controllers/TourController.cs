@@ -9,10 +9,12 @@ namespace TourAgencyClient.Controllers
     public class TourController : Controller
     {
         private readonly TourService _tourService;
+        private readonly UserService _userService;
 
-        public TourController(TourService tourService)
+        public TourController(TourService tourService, UserService userService)
         {
             _tourService = tourService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -30,6 +32,12 @@ namespace TourAgencyClient.Controllers
             }
 
             var tours = await _tourService.GetToursAsync(query);
+
+            if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+            {
+                var clients = await _userService.GetAllClientsAsync();
+                ViewData["ClientsList"] = clients;
+            }
 
             return View("ToursList", tours);
         }

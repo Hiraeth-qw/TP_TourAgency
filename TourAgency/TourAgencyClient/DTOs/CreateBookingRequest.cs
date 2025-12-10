@@ -7,6 +7,6 @@ namespace TourAgencyClient.DTOs
         public int TourId { get; set; }
         public int TouristsNumber { get; set; }
         public string? ClientUserId { get; set; }
-        public int CartItemId { get; set; }
+        public int? CartItemId { get; set; }
     }
 }
