@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var isAdmin = User.IsInRole("Admin");
+    var isClient = User.IsInRole("Client");
+}
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
@@ -17,6 +22,10 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     Агентство Туров
                 </a>
+                
+                <a class="nav-item text-white ms-5" style="text-decoration: none;" asp-area="" asp-controller="Tour" asp-action="List">
+                    Каталог Туров
+                </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                         aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +38,7 @@
                     </ul>
 
                     <ul class="navbar-nav">
-                        @if (User.IsInRole("Admin"))
+                        @if (isAdmin)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-controller="Admin" asp-action="Users">
@@ -37,11 +46,14 @@
                                 </a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Booking" asp-action="Cart">
-                                <i class="bi bi-cart"></i> Корзина
-                            </a>
-                        </li>
+                        @if (isClient)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Booking" asp-action="Cart">
+                                    <i class="bi bi-cart"></i> Корзина
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -61,11 +73,14 @@
                                             <i class="bi bi-person me-2"></i> Мой профиль
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="Booking" asp-action="MyBookings">
-                                            <i class="bi bi-journal-check me-2"></i> Мои бронирования
-                                        </a>
-                                    </li>
+                                    @if (isClient)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Booking" asp-action="MyBookings">
+                                                <i class="bi bi-journal-check me-2"></i> Мои бронирования
+                                            </a>
+                                        </li>
+                                    }
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">
