@@ -191,10 +191,9 @@ namespace MicroserviceBooking.Controllers
                 return Conflict(booking.FailureReason);
             }
 
-            var cartItemToRemove = await _context.CartItems.FirstOrDefaultAsync(c => c.Id == request.CartItemId);
-
-            if (cartItemToRemove != null)
+            if (request.CartItemId != null)
             {
+                var cartItemToRemove = await _context.CartItems.FirstOrDefaultAsync(c => c.Id == request.CartItemId);
                 _context.CartItems.Remove(cartItemToRemove);
             }
 
