@@ -22,7 +22,7 @@ namespace MicroserviceUser.Controllers
             _userManager = userManager;
         }
 
-        // 1. GET: api/users
+        // GET: api/users
         [HttpGet]
         [Authorize(Roles = "Admin, Manager")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsers()
@@ -47,7 +47,7 @@ namespace MicroserviceUser.Controllers
             return Ok(userDtos);
         }
 
-        // 2. GET: api/users/{id}
+        // GET: api/users/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDto>> GetUserById(string id)
         {
@@ -79,7 +79,7 @@ namespace MicroserviceUser.Controllers
             });
         }
 
-        // 3. GET: api/users/me
+        // GET: api/users/me
         [HttpGet("me")]
         public async Task<ActionResult<UserReadDto>> GetMyProfile()
         {

@@ -122,7 +122,6 @@ namespace MicroserviceBooking.Controllers
             if (isStaff && !string.IsNullOrEmpty(request.ClientUserId)) 
                 targetUserId = request.ClientUserId;
 
-            // Информация о туре
             var tour = await _tourService.GetTourAsync(request.TourId);
             if (tour == null) return NotFound("Tour not found.");
             if (tour.AvailableSeats < request.TouristsNumber)
@@ -140,7 +139,6 @@ namespace MicroserviceBooking.Controllers
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
-            // Опрос партнёров
             bool allPartnersConfirmed = true;
 
             foreach (var partnerId in tour.PartnerIds)
@@ -179,7 +177,6 @@ namespace MicroserviceBooking.Controllers
                 return Conflict(new { Message = booking.FailureReason, Confirmations = booking.PartnerConfirmations });
             }
 
-            // Резервация мест в туре
             booking.Status = BookingStatus.PendingPayment;
             bool seatsReserved = await _tourService.ReserveSeatAsync(request.TourId, request.TouristsNumber, token);
 
@@ -306,7 +303,6 @@ namespace MicroserviceBooking.Controllers
                 await _tourService.ReleaseSeatAsync(booking.TourId, booking.NumberOfSeats, token);
             }
 
-            // 3. Обновление статуса
             booking.Status = BookingStatus.Cancelled;
             booking.FailureReason = "Cancelled by user/manager.";
             await _context.SaveChangesAsync();

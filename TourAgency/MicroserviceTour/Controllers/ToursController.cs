@@ -94,7 +94,6 @@ namespace MicroserviceTour.Controllers
                 return NotFound($"Tour with ID {id} not found.");
             }
 
-            // Mapping DTO на сущность
             tourToUpdate.Title = tourDto.Title;
             tourToUpdate.Location = tourDto.Location;
             tourToUpdate.Description = tourDto.Description;
@@ -128,7 +127,6 @@ namespace MicroserviceTour.Controllers
         [Authorize(Roles = "ContentManager")]
         public async Task<ActionResult<Tour>> PostTour(TourCreateUpdate tourDto)
         {
-            // Mapping DTO на Tour
             var newTour = new Tour
             {
                 Title = tourDto.Title,
