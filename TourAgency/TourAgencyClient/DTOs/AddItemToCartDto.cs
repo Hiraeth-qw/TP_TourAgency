@@ -1,4 +1,6 @@
-﻿namespace TourAgencyClient.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TourAgencyClient.DTOs
 {
     public class AddItemToCartDto
     {

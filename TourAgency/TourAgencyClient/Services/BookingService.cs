@@ -20,6 +20,13 @@ namespace TourAgencyClient.Services
             return result != null;
         }
 
+        public async Task<bool> RemoveFromCartAsync(int id)
+        {
+            var resp = await SendAsync<object>("BookingApi", HttpMethod.Delete, $"api/booking/plan/{id}");
+
+            return resp.IsSuccess;
+        }
+
         public async Task<List<CartItemViewModel>> GetMyCartAsync()
         {
             var resp = await SendAsync<List<CartItemDto>>("BookingApi", HttpMethod.Get, "/api/booking/plan");

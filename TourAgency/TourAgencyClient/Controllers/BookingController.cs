@@ -35,6 +35,23 @@ namespace TourAgencyClient.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            if (id <= 0) return BadRequest(new { message = "Некорректный ID." });
+
+            var success = await _bookingService.RemoveFromCartAsync(id);
+
+            if (success)
+            {
+                return Ok(new { message = "Тур успешно удалён из корзины." });
+            }
+            else
+            {
+                return StatusCode(400, new { message = "Не удалось удалить тур из корзины." });
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Cart()
         {

@@ -43,12 +43,20 @@
                                         <span class="h3 fw-bold" style="color: black;">@item.TotalPrice.ToString("C")</span>
                                     </div>
 
-                                    <button class="btn btn-custom w-100 btn-book-item"
-                                            data-tour-id="@item.TourId"
-                                            data-cart-id="@item.CartItemId"
-                                            data-seats="@item.TouristsNumber">
-                                        Забронировать
-                                    </button>
+                                    <div class="d-flex justify-content-end gap-2">
+
+                                        <button class="btn btn-outline-danger btn-remove-item"
+                                                data-cart-id="@item.CartItemId">
+                                            <i class="bi bi-trash"></i> Удалить
+                                        </button>
+
+                                        <button class="btn btn-custom btn-book-item"
+                                                data-tour-id="@item.TourId"
+                                                data-cart-id="@item.CartItemId"
+                                                data-seats="@item.TouristsNumber">
+                                            <i class="bi bi-cart-check"></i> Забронировать
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,6 +113,43 @@
                     }
                 });
             });
+
+            $('.btn-remove-item').on('click', function(e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                var originalText = btn.text();
+                var cartItemId = btn.data('cart-id');
+
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+
+                $.ajax({
+                    url: '/Booking/RemoveFromCart',
+                    type: 'POST',
+                    data: { id: cartItemId },
+                    success: function(response) {
+                        showToast(response.message, true);
+                        var card = $('#card-' + cartItemId);
+
+                        card.fadeOut(500, function() {
+                            $(this).remove();
+                            if ($('.cart-item-card').length === 0) {
+                                location.reload();
+                            }
+                        });
+                    },
+                    error: function(xhr) {
+                        var errorMsg = "Не удалось удалить из корзины.";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        }
+
+                        showToast(errorMsg, false);
+                        btn.prop('disabled', false).text(originalText);
+                    }
+                });
+            });
+
         });
     </script>
 }
