@@ -6,10 +6,10 @@ namespace TourAgencyClient.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountService _accountService;
-        private readonly BookingService _bookingService;
+        private readonly IAccountService _accountService;
+        private readonly IBookingService _bookingService;
 
-        public AccountController(AccountService accountService, BookingService bookingService)
+        public AccountController(IAccountService accountService, IBookingService bookingService)
         {
             _accountService = accountService;
             _bookingService = bookingService;

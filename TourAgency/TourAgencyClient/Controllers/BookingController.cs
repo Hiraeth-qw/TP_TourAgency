@@ -8,9 +8,9 @@ namespace TourAgencyClient.Controllers
     [Authorize]
     public class BookingController : Controller
     {
-        private readonly BookingService _bookingService;
+        private readonly IBookingService _bookingService;
 
-        public BookingController(BookingService bookingService)
+        public BookingController(IBookingService bookingService)
         {
             _bookingService = bookingService;
         }

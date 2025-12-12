@@ -3,10 +3,10 @@ using TourAgencyClient.Models;
 
 namespace TourAgencyClient.Services
 {
-    public class BookingService: BaseService
+    public class BookingService : BaseService, IBookingService
     {
-        private readonly TourService _tourService;
-        public BookingService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, TourService tourService)
+        private readonly ITourService _tourService;
+        public BookingService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, ITourService tourService)
             : base(httpClientFactory, httpContextAccessor)
         {
             _tourService = tourService;
@@ -32,7 +32,7 @@ namespace TourAgencyClient.Services
             var resp = await SendAsync<List<CartItemDto>>("BookingApi", HttpMethod.Get, "/api/booking/plan");
             var cartItems = resp.Result;
 
-            if (!resp.IsSuccess || cartItems    == null)
+            if (!resp.IsSuccess || cartItems == null)
             {
                 return new List<CartItemViewModel>();
             }

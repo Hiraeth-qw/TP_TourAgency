@@ -9,9 +9,9 @@ namespace TourAgencyClient.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController: Controller
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public AdminController(UserService userService)
+        public AdminController(IUserService userService)
         {
             _userService = userService;
         }

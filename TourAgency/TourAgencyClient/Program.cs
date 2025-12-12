@@ -27,12 +27,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<BaseService>();
-builder.Services.AddScoped<TourService>();
-builder.Services.AddScoped<PartnerService>();
-builder.Services.AddScoped<BookingService>();
-builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IBaseService, BaseService>();
+builder.Services.AddScoped<ITourService, TourService>();
+builder.Services.AddScoped<IPartnerService, PartnerService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var defaultCulture = "ru-RU";

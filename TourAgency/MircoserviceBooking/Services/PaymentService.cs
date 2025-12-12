@@ -3,7 +3,7 @@ using MicroserviceBooking.DTOs;
 
 namespace MicroserviceBooking.Services
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         private readonly HttpClient _client;
         public PaymentService(HttpClient client) => _client = client;

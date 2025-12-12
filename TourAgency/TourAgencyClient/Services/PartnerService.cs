@@ -4,7 +4,7 @@ using TourAgencyClient.DTOs;
 
 namespace TourAgencyClient.Services
 {
-    public class PartnerService : BaseService
+    public class PartnerService : BaseService, IPartnerService
     {
         public PartnerService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
             : base(httpClientFactory, httpContextAccessor)
@@ -21,7 +21,7 @@ namespace TourAgencyClient.Services
             var partnerNames = new List<string>();
 
             var tasks = partnerIds.Select(id => SendAsync<PartnerNameDto>("PartnerApi", HttpMethod.Get, $"/api/partners/{id}")).ToList();
-            
+
 
             var results = await Task.WhenAll(tasks);
 

@@ -6,7 +6,7 @@ using TourAgencyClient.DTOs;
 
 namespace TourAgencyClient.Services
 {
-    public class BaseService
+    public class BaseService : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;

@@ -7,7 +7,7 @@ using TourAgencyClient.Models;
 
 namespace TourAgencyClient.Services
 {
-    public class AccountService: BaseService
+    public class AccountService : BaseService, IAccountService
     {
         public AccountService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
             : base(httpClientFactory, httpContextAccessor)

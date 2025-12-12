@@ -3,7 +3,7 @@ using TourAgencyClient.Models;
 
 namespace TourAgencyClient.Services
 {
-    public class UserService : BaseService
+    public class UserService : BaseService, IUserService
     {
         public UserService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
             : base(httpClientFactory, httpContextAccessor)

@@ -10,17 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddHttpClient<TourService>(client =>
+builder.Services.AddHttpClient<ITourService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7116/api/tours/");
 });
 
-builder.Services.AddHttpClient<PartnerService>(client =>
+builder.Services.AddHttpClient<IPartnerService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7150/api/partners/");
 });
 
-builder.Services.AddHttpClient<PaymentService>(client =>
+builder.Services.AddHttpClient<IPaymentService>(client =>
 {
     client.BaseAddress = new Uri("https://localhost:7223/api/payment/");
 });

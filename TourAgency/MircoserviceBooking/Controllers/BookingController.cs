@@ -15,11 +15,11 @@ namespace MicroserviceBooking.Controllers
     public class BookingController : ControllerBase
     {
         private readonly BookingContext _context;
-        private readonly TourService _tourService;
-        private readonly PartnerService _partnerService;
-        private readonly PaymentService _paymentService;
+        private readonly ITourService _tourService;
+        private readonly IPartnerService _partnerService;
+        private readonly IPaymentService _paymentService;
 
-        public BookingController(BookingContext context, TourService tourService, PartnerService partnerService, PaymentService paymentService)
+        public BookingController(BookingContext context, ITourService tourService, IPartnerService partnerService, IPaymentService paymentService)
         {
             _context = context;
             _tourService = tourService;

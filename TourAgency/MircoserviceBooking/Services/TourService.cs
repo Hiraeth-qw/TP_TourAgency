@@ -3,7 +3,7 @@ using MicroserviceBooking.DTOs;
 
 namespace MicroserviceBooking.Services
 {
-    public class TourService
+    public class TourService : ITourService
     {
         private readonly HttpClient _client;
         public TourService(HttpClient client)

@@ -5,10 +5,10 @@ using TourAgencyClient.Services;
 
 namespace TourAgencyClient.Services
 {
-    public class TourService : BaseService
+    public class TourService : BaseService, ITourService
     {
-        private readonly PartnerService _partnerService;
-        public TourService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, PartnerService partnerService)
+        private readonly IPartnerService _partnerService;
+        public TourService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IPartnerService partnerService)
             : base(httpClientFactory, httpContextAccessor)
         {
             _partnerService = partnerService;

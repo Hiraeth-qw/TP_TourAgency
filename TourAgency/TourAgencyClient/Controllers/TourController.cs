@@ -8,10 +8,10 @@ namespace TourAgencyClient.Controllers
 {
     public class TourController : Controller
     {
-        private readonly TourService _tourService;
-        private readonly UserService _userService;
+        private readonly ITourService _tourService;
+        private readonly IUserService _userService;
 
-        public TourController(TourService tourService, UserService userService)
+        public TourController(ITourService tourService, IUserService userService)
         {
             _tourService = tourService;
             _userService = userService;
