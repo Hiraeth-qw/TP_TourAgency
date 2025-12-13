@@ -33,9 +33,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("TourConnection");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
 builder.Services.AddDbContext<TourContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TourConnection"))
-);
+{
+    options.UseMySql(
+        connectionString,
+        serverVersion,
+        mySqlOptions => mySqlOptions
+            .EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null)
+    );
+});
 
 var app = builder.Build();
 

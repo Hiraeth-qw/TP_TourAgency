@@ -53,8 +53,20 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+var connectionString = builder.Configuration.GetConnectionString("BookingConnection");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
 builder.Services.AddDbContext<BookingContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BookingConnection")));
+{
+    options.UseMySql(
+        connectionString,
+        serverVersion,
+        mySqlOptions => mySqlOptions
+            .EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null)
+    );
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

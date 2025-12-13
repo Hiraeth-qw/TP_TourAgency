@@ -8,10 +8,6 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<UserContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UserConnection"))
-);
-
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
@@ -44,6 +40,20 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+var connectionString = builder.Configuration.GetConnectionString("UserConnection");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+builder.Services.AddDbContext<UserContext>(options =>
+{
+    options.UseMySql(
+        connectionString,
+        serverVersion,
+        mySqlOptions => mySqlOptions
+            .EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null)
+    );
+});
 
 // Add services to the container.
 
