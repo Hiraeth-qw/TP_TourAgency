@@ -11,9 +11,9 @@ namespace TourAgencyClient.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly BaseService _baseService;
+        private readonly IBaseService _baseService;
 
-        public AuthController(BaseService baseService)
+        public AuthController(IBaseService baseService)
         {
             _baseService = baseService;
         }

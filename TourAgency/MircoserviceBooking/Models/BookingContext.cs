@@ -12,6 +12,9 @@ namespace MicroserviceBooking.Models
             modelBuilder.Entity<Booking>()
                 .Property(p => p.Status)
                 .HasConversion<string>();
+            modelBuilder.Entity<Booking>()
+                .Property(t => t.TotalAmount)
+                .HasPrecision(10, 2);
         }
         public DbSet<CartItem> CartItems { get; set; }
     }

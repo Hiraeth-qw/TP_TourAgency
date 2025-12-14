@@ -97,7 +97,7 @@ else
                         setTimeout(() => location.reload(), 1500);
                     },
                     error: function(xhr) {
-                        var msg = xhr.responseJSON ? xhr.responseJSON.message : "Ошибка выполнения.";
+                        var msg = "Ошибка выполнения.";
                         showToast(msg, false);
                         btn.prop('disabled', false);
                     }

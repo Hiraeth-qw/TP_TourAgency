@@ -11,21 +11,22 @@
     <h1 class="display-4">Каталог Туров</h1>
 </div>
 
+<partial name="_TourSearchForm" model="currentQuery" />
+
 @if (isContentManager)
 {
-    <div class="position-absolute top-50 end-0 translate-middle-y me-4">
+    <div class="text-center mb-4">
         <a asp-action="Create" class="btn btn-light text-primary fw-bold shadow">
             <i class="bi bi-plus-circle-fill"></i> Добавить тур
         </a>
     </div>
 }
-<partial name="_TourSearchForm" model="currentQuery" />
 
 <div class="container">
     @if (Model == null || Model.Count == 0)
     {
         <div class="alert alert-warning" role="alert">
-            К сожалению, на данный момент нет доступных туров.a
+            К сожалению, на данный момент нет доступных туров.
         </div>
     }
     else

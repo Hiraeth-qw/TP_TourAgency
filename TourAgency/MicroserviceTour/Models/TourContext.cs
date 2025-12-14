@@ -19,6 +19,9 @@ namespace MicroserviceTour.Models
             modelBuilder.Entity<Tour>()
                 .Property(e => e.PartnerIds)
                 .HasConversion(converter);
+            modelBuilder.Entity<Tour>()
+                .Property(t => t.Price)
+                .HasPrecision(10, 2);
         }
     }
 }

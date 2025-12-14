@@ -17,7 +17,7 @@ namespace TourAgencyClient.Services
             var resp = await SendAsync<object>("BookingApi", HttpMethod.Post, "api/booking/plan/add", dto);
             var result = resp.Result;
 
-            return result != null;
+            return resp.IsSuccess;
         }
 
         public async Task<bool> RemoveFromCartAsync(int id)
@@ -85,8 +85,8 @@ namespace TourAgencyClient.Services
                     Id = b.Id,
                     TourId = b.TourId,
                     TourTitle = tour?.Title ?? "Неизвестный тур",
-                    TourStartDate = tour.StartDate,
-                    TourEndDate = tour.EndDate,
+                    TourStartDate = tour?.StartDate ?? DateTime.MinValue,
+                    TourEndDate = tour?.EndDate ?? DateTime.MinValue,
                     BookingDate = b.BookingDate,
                     NumberOfSeats = b.NumberOfSeats,
                     TotalAmount = b.TotalAmount,
