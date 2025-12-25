@@ -125,7 +125,9 @@ namespace MicroserviceBooking.Controllers
             var tour = await _tourService.GetTourAsync(request.TourId);
             if (tour == null) return NotFound("Tour not found.");
             if (tour.AvailableSeats < request.TouristsNumber)
-                return Conflict("Not enough seats available.");
+                return Conflict(new { Message = "Not enough seats available." });
+            if (DateTime.Now.Date >= tour.StartDate)
+                return Conflict(new { Message = "Tour is unavailable to book" });
 
             var booking = new Booking
             {
@@ -185,7 +187,7 @@ namespace MicroserviceBooking.Controllers
                 booking.Status = BookingStatus.Failed;
                 booking.FailureReason = "Failed to reserve seats in Tour Service.";
                 await _context.SaveChangesAsync();
-                return Conflict(booking.FailureReason);
+                return Conflict(new { Message = booking.FailureReason });
             }
 
             if (request.CartItemId != null)

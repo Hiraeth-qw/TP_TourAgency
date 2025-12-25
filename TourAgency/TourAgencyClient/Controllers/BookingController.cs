@@ -74,7 +74,7 @@ namespace TourAgencyClient.Controllers
             {
                 string errorMsg = response.ErrorMessage ?? "Ошибка при создании бронирования.";
                 if (response.StatusCode == 409)
-                    errorMsg = "К сожалению, места закончились или партнер отклонил запрос.";
+                    errorMsg = "Ошибка: дата тура некорректна / места закончились / партнер отклонил запрос.";
 
                 return StatusCode(response.StatusCode == 0 ? 500 : response.StatusCode, new { message = errorMsg });
             }
